@@ -1,31 +1,67 @@
-import React from "react";
-import YouTube from "react-youtube";
+import React, { useState, useEffect } from "react";
 
 export default function Home() {
-  const opts = {
-    height: "100%",
-    width: "1200px",
-    playerVars: {
-      autoplay: 1,
-      controls: 1,
-      loop: 1,
-      mute: 1,
-      showinfo: 0,
-      playlist: "gN5hj3vXMX8",
-    },
-  };
+  const [windowDimensions, setWindowDimensions] = useState({
+    width: typeof window !== "undefined" ? window.innerWidth : 800,
+    height: typeof window !== "undefined" ? window.innerHeight : 600,
+  });
+
+  // Efecto para manejar el redimensionamiento de la ventana
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", handleResize);
+      handleResize();
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", handleResize);
+      }
+    };
+  }, []);
+
+  // Efecto para cargar la API de YouTube
+  useEffect(() => {
+    if (typeof window !== "undefined" && typeof window.YT === "undefined") {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      window.onYouTubeIframeAPIReady = () => {
+        new window.YT.Player("youtube-player", {
+          height: windowDimensions.height.toString(),
+          width: windowDimensions.width.toString(),
+          videoId: "gN5hj3vXMX8",
+          playerVars: {
+            autoplay: 1,
+            controls: 1,
+            loop: 1,
+            mute: 1,
+            playlist: "gN5hj3vXMX8",
+          },
+        });
+      };
+    }
+  }, [windowDimensions.height, windowDimensions.width]);
 
   return (
     <div
       style={{
-        display: "flex",
-        justifyContent: "center",
+        position: "relative",
         overflow: "hidden",
-        width: "100vw",
-        height: "100vh",
+        width: "100%",
+        height: "100%",
       }}
     >
-      <YouTube videoId="gN5hj3vXMX8" opts={opts} />
+      <div id="youtube-player"></div>
     </div>
   );
 }
