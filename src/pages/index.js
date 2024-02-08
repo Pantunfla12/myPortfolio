@@ -9,29 +9,39 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   return (
     <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        width: "100vw",
-        height: "100vh",
-        // position: "relative",
-        overflow: "hidden",
-      }}
+      width="100vw"
+      height="100vh"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
     >
-      <iframe
+      <Box
         sx={{
-          width: "900px",
-          height: "506px",
-          position: "absolute",
-          top: 0,
-          left: 0,
+          display: "flex",
+          justifyContent: "center",
+          width: "300px",
+          height: "533px",
+          // position: "relative",
+          overflow: "hidden",
           border: 0,
         }}
-        src="https://www.youtube.com/embed/gN5hj3vXMX8?autoplay=1&loop=1&playlist=gN5hj3vXMX8"
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+      >
+        <iframe
+          sx={{
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            border: 0,
+          }}
+          src="https://www.youtube.com/embed/gN5hj3vXMX8?autoplay=1&loop=1&controls=0&showinfo=0&playlist=gN5hj3vXMX8"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </Box>
     </Box>
   );
 }
