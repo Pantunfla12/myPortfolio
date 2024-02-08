@@ -9,6 +9,7 @@ export default function Home() {
       autoplay: 1,
       controls: 1,
       loop: 1,
+      mute: 1,
       showinfo: 0,
       playlist: "gN5hj3vXMX8",
     },
